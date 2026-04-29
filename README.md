@@ -3,7 +3,7 @@
 Booooost는 2D 우주 로켓 러닝 게임입니다.
 
 ## 🎮 게임 소개
-![Gameplay](Screenshots/BooooostPlay.gif)
+![Gameplay](Screenshots/GamePlay.gif)
 
 플레이어는 로켓을 조작하여
 장애물을 피하며 생존해야합니다!
