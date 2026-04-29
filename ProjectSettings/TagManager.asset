@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Enemy
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BackGround
+    uniqueID: 2855480711
+    locked: 0
+  - name: Ground
+    uniqueID: 3140107139
+    locked: 0
+  - name: LandingPad
+    uniqueID: 204441617
+    locked: 0
+  - name: Enemy
+    uniqueID: 2626864609
+    locked: 0
+  - name: Rocket
+    uniqueID: 3410461495
+    locked: 0
+  m_RenderingLayers:
+  - Default
