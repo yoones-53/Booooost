@@ -20,9 +20,6 @@ public class Rocket : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
     private bool isGameOver = false;
-
-    private bool rotateLeft = false;
-    private bool rotateRight = false;
     
     void Start()
     {
@@ -75,37 +72,16 @@ public class Rocket : MonoBehaviour
     {
         float rotateInput = 0f;
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || rotateLeft)
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             rotateInput = 1f;
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || rotateRight)
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             rotateInput = -1f;
         }
 
         transform.Rotate(0f, 0f, rotateInput * rotateSpeed * Time.deltaTime);
-    }
-
-
-    public void LeftButtonDown()
-    {
-        rotateLeft = true;
-    }
-
-    public void LeftButtonUp()
-    {
-        rotateLeft = false;
-    }
-
-    public void RightButtonDown()
-    {
-        rotateRight = true;
-    }
-
-    public void RightButtonUp()
-    {
-        rotateRight = false;
     }
 
     public void Explode() // 로켓 폭발
