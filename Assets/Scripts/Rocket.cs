@@ -11,14 +11,14 @@ public class Rocket : MonoBehaviour
     public AudioSource engineSound; // 엔진 사운드
     public AudioSource explodeSound; // 폭발 사운드
 
-    [Header("Sprites")]
+    [Header("Rocket")]
     public Sprite idleSprite; // 대기 상태 스프라이트
-    public Sprite thrustSprite; // 추진 상태 스프라이트
-    public Sprite explodeSprite;  // 폭발 상태 스프라이트
+    public ParticleSystem thrustParticle;
+    public ParticleSystem explodeParticle;
 
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
-    private bool isGameOver = false; // 게임 오버시 true
+    private bool isGameOver = false;
     
     void Start()
     {
@@ -27,16 +27,17 @@ public class Rocket : MonoBehaviour
 
         if (spriteRenderer == null && idleSprite == null)
             return;
-
-        spriteRenderer.sprite = idleSprite;
     }
 
     void Update()
     {
         if (isGameOver) return;
         
-        HandleThrust(); // 로켓 추진 기능
-        HandleRotation(); // 로켓 회전 기능
+        HandleThrust();
+        HandleRotation();
+
+        if (transform.position.y > 300f)
+            transform.position = new Vector3(transform.position.x, 10f, 0f);
     }
 
     void HandleThrust() // 로켓 추진
@@ -48,30 +49,25 @@ public class Rocket : MonoBehaviour
         {
             rigidBody.AddForce(transform.up * thrustForce * Time.deltaTime); // 가속 공식
             rigidBody.linearVelocity = Vector2.ClampMagnitude(rigidBody.linearVelocity, maxSpeed); // 최고 속도 조정
-
-            spriteRenderer.sprite = thrustSprite; // 추진 스프라이트
-
-            if (!engineSound.isPlaying) // 엔진 소리
+            
+            if (!engineSound.isPlaying)
             {
+                thrustParticle.Play();
                 engineSound.Play();
             }
         }
 
         else // 추진 중이 아닐때
         {
-            if (spriteRenderer == null && idleSprite == null) return;
-            spriteRenderer.sprite = idleSprite;
-
-            if (engineSound.isPlaying)
-            {
+            if (!engineSound.isPlaying) return;
+                thrustParticle.Stop();
                 engineSound.Stop();
-            }
         }
     }
 
     void HandleRotation() // 로켓 회전
     {
-        float rotateInput = 0f; // 회전 입력 받기
+        float rotateInput = 0f;
 
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -86,14 +82,18 @@ public class Rocket : MonoBehaviour
 
     public void Explode() // 로켓 폭발
     {
-        isGameOver = true; // 폭발시 게임오버
+        if(isGameOver) return;
 
-        if (spriteRenderer != null && explodeSprite != null) // 폭발 스프라이트
-        {
-            spriteRenderer.sprite = explodeSprite;
-        }
-        explodeSound.Play(); // 폭발 소리
+        isGameOver = true;
         
+        thrustParticle.Stop();
+        engineSound.Stop();
+        
+        explodeParticle.Play();
+        explodeSound.Play();
+        
+        spriteRenderer.enabled = false;
         rigidBody.simulated = false; // 폭발시 로켓 위치 고정
+        GameManager.Instance.GameOver();
     }
 }

@@ -4,6 +4,9 @@ public class Alien : MonoBehaviour
 {
     [HideInInspector]
     public Camera targetCamera;
+    [SerializeField]
+    float destroyOffset = 100f;
+    
 
     void Start()
     {
@@ -13,13 +16,16 @@ public class Alien : MonoBehaviour
     }
     void Update()
     {
-        if (transform.position.x < GetCameraLeftX())
+        if (transform.position.x < GetCameraLeftX() - destroyOffset)
             Destroy(gameObject);
     }
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-            GameManager.Instance.GameOver();
+
+        Rocket rocket = other.GetComponent<Rocket>();
+        if (rocket == null) return;
+        rocket.Explode();
     }
     float GetCameraLeftX()
     {

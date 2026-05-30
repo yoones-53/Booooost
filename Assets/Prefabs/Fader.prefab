@@ -106,6 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74d31dab553c73b4a8bc434b68538b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Alien
+  targetCamera: {fileID: 0}
+  destroyOffset: 100
 --- !u!70 &7832170737540339214
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

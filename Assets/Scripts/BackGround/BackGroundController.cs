@@ -4,10 +4,8 @@ public class BackgroundController : MonoBehaviour
 {
     [SerializeField]
     Transform background1;
-
     [SerializeField]
     Transform background2;
-
     [SerializeField]
     Camera targetCamera;
 
@@ -38,11 +36,16 @@ public class BackgroundController : MonoBehaviour
 
     void RepositionIfOutside(Transform movingBackground, SpriteRenderer movingRenderer, SpriteRenderer otherRenderer)
     {
-        if (movingRenderer.bounds.max.x > GetCameraLeftX())
-            return;
-
-        float newX = otherRenderer.bounds.max.x + movingRenderer.bounds.extents.x;
-        movingBackground.position = new Vector3(newX, movingBackground.position.y, movingBackground.position.z);
+        if (movingRenderer.bounds.max.x < GetCameraLeftX())
+        {
+            float newX = otherRenderer.bounds.max.x + movingRenderer.bounds.extents.x;
+            movingBackground.position = new Vector3(newX, movingBackground.position.y, movingBackground.position.z);
+        }
+        else if (movingRenderer.bounds.min.x > GetCameraRightX())
+        {
+            float newX = otherRenderer.bounds.min.x - movingRenderer.bounds.extents.x;
+            movingBackground.position = new Vector3(newX, movingBackground.position.y, movingBackground.position.z);
+        }
     }
 
     float GetCameraLeftX()
@@ -52,6 +55,14 @@ public class BackgroundController : MonoBehaviour
 
         float distance = Mathf.Abs(targetCamera.transform.position.z - transform.position.z);
         return targetCamera.ViewportToWorldPoint(new Vector3(0f, 0.5f, distance)).x;
+    }
+    float GetCameraRightX()
+    {
+        if (targetCamera == null)
+            return float.NegativeInfinity;
+
+        float distance = Mathf.Abs(targetCamera.transform.position.z - transform.position.z);
+        return targetCamera.ViewportToWorldPoint(new Vector3(1f, 0.5f, distance)).x;
     }
 }
 

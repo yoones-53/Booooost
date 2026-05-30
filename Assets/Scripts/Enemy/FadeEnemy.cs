@@ -13,11 +13,10 @@ public class FadeEnemy : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (player == null) // 플레이어 태그로 플레이어 찾기
-        {
-            GameObject found = GameObject.FindGameObjectWithTag("Player");
-            player = found.transform;
-        }
+        if (player != null) return;
+        
+        GameObject found = GameObject.FindGameObjectWithTag("Player");
+        player = found.transform;
     }
 
     void Update()

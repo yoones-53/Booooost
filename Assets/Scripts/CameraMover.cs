@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class CameraMover : MonoBehaviour
 {
-    public Transform player;
-    public float smoothSpeed = 5f; // 카메라 부드럽게 이동하기 위해 지연 이동
-    public Vector3 offset = new Vector3(3f, 2f, -10f); // 카메라 시점 이동
+    [SerializeField]
+    Transform player;
+    [SerializeField]
+    float smoothSpeed = 5f; // 카메라 부드럽게 이동하기 위해 지연 이동
+    [SerializeField]
+    Vector3 offset = new Vector3(3f, 2f, -10f); // 카메라 시점 이동
     
     void Update()
     {

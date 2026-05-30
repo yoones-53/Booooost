@@ -46,8 +46,7 @@ public class VerticalBackgroundController : MonoBehaviour
         else if (movingRenderer.bounds.min.y > GetCameraTopY())
         {
             float newY = otherRenderer.bounds.min.y - movingRenderer.bounds.extents.y;
-            movingBackground.position = new Vector3(movingBackground.position.x, newY, movingBackground.position.z
-            );
+            movingBackground.position = new Vector3(movingBackground.position.x, newY, movingBackground.position.z);
         }
     }
 
