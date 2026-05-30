@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Rocket : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class Rocket : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
     private bool isGameOver = false;
+
+    private bool rotateLeft = false;
+    private bool rotateRight = false;
     
     void Start()
     {
@@ -42,8 +46,10 @@ public class Rocket : MonoBehaviour
 
     void HandleThrust() // 로켓 추진
     {
+        bool isTouchingUI = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+
         bool isThrusting = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) ||
-                           Input.GetKey(KeyCode.W)     || Input.GetMouseButton(0);// Space, 윗 방향키, W, 좌클릭
+                           Input.GetKey(KeyCode.W)     || (Input.GetMouseButton(0) && !isTouchingUI);
 
         if (isThrusting) // 추진 중일때
         {
@@ -65,19 +71,41 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    void HandleRotation() // 로켓 회전
+    void HandleRotation()
     {
         float rotateInput = 0f;
 
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || rotateLeft)
         {
             rotateInput = 1f;
         }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || rotateRight)
         {
             rotateInput = -1f;
         }
+
         transform.Rotate(0f, 0f, rotateInput * rotateSpeed * Time.deltaTime);
+    }
+
+
+    public void LeftButtonDown()
+    {
+        rotateLeft = true;
+    }
+
+    public void LeftButtonUp()
+    {
+        rotateLeft = false;
+    }
+
+    public void RightButtonDown()
+    {
+        rotateRight = true;
+    }
+
+    public void RightButtonUp()
+    {
+        rotateRight = false;
     }
 
     public void Explode() // 로켓 폭발
