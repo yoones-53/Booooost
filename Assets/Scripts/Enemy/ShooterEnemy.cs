@@ -10,7 +10,7 @@ public class ShooterEnemy : MonoBehaviour
     public float shootInterval = 1.2f; // 발사 간격
     public float detectRange = 9f; // 플레이어 감지 거리
 
-    private float shootTimer = 0f; // 발사 타이머
+    private float shootTimer = 0f;
 
     void Start()
     {
@@ -42,20 +42,15 @@ public class ShooterEnemy : MonoBehaviour
     void LookAtPlayer()
     {
         Vector2 direction = player.position - transform.position; // 플레이어 방향
-
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; // 각도 계산
-
         transform.rotation = Quaternion.Euler(0, 0, angle + 180f);// Z축 기준 회전
     }
 
     void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation); // 총알 생성
-
-        Vector2 direction = (player.position - firePoint.position).normalized; // 플레이어 방향 정규화
-
+        Vector2 direction = (player.position - firePoint.position).normalized;
         Bullet bulletScript = bullet.GetComponent<Bullet>(); // Bullet 스크립트에 방향 전달
-        
         bulletScript.SetDirection(direction); // 플레이어 방향
     }
 }

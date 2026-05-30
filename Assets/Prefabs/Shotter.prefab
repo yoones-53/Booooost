@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBullet
   player: {fileID: 0}
-  bulletPrefab: {fileID: 8859436210146513508, guid: 3badd524bd9e79a4ba73176e94727ceb, type: 3}
+  bulletPrefab: {fileID: 43569100342963060, guid: a18b1bd13c191204696971ffbf049f58, type: 3}
   firePoint: {fileID: 7896462745817681879}
   shootInterval: 1.2
   detectRange: 9

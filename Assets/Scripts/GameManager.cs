@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver) return;
 
-        score = (int)player.position.x;
-        if (score < 0)
-        {
-            score = 0;
-        }
+        int newScore = (int)player.position.x;
+
+        if (newScore < 0)
+            newScore = 0;
+
+        if (score >= newScore) return;
+
+        score = newScore;
         scoreText.text = $"{score}km";
     }
 
@@ -40,8 +43,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Vector2 alienSpawnYRange = new Vector2(-6f, 82f);
 
-    [Header("GameOver")]
+    [Header("Panel")]
     public GameObject gameOverPanel;
+    public GameObject pausePanel;
     
     [SerializeField]
     Camera targetCamera;
@@ -67,6 +71,7 @@ public class GameManager : MonoBehaviour
     float nextSpawnX = 10f;
     float nextLevelX = 100f;
     bool isGameOver = false;
+    bool isPaused = false;
     
     void Start()
     {
@@ -77,28 +82,33 @@ public class GameManager : MonoBehaviour
     {
         if (isGameOver)
         {
-            if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            } 
+            RestartInput();
             return;
         }
 
         RocketScore();
-
-        if (player.position.x >= nextLevelX && spawnCount < 30)
+        LevelUp();
+        SpawnAlien();
+        
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            spawnCount++;
-            nextLevelX += unitsPerLevel;
-        }
-
-        if (player.position.x >= nextSpawnX)
-        {
-            SpawnAlien();
-            nextSpawnX += unitsPerSpawn;
+            if (isPaused) Resume();
+            else Pause();
         }
     }
 
+    void Resume()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f;
+        isPaused = false;
+    }
+    void Pause()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f;
+        isPaused = true;
+    }
     public void GameOver()
     {
         isGameOver = true; // 게임오버
@@ -115,6 +125,7 @@ public class GameManager : MonoBehaviour
     }
     void SpawnAlien()
     {
+        if (player.position.x < nextSpawnX) return;
         for (int i = 0; i < spawnCount; i++)
         {
             float spawnX = player.position.x + Random.Range(20f, 30f);
@@ -124,5 +135,23 @@ public class GameManager : MonoBehaviour
             int randomIndex = Random.Range(0, alienPrefabs.Length);
             Instantiate(alienPrefabs[randomIndex], spawnPosition, Quaternion.identity, alienParent);
         }
+        nextSpawnX += unitsPerSpawn;
+    }
+
+    void LevelUp()
+    {
+        if (player.position.x >= nextLevelX && spawnCount < 30)
+        {
+            spawnCount++;
+            nextLevelX += unitsPerLevel;
+        }
+    }
+
+    void RestartInput()
+    {
+        if (Keyboard.current.anyKey.wasPressedThisFrame || Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            } 
     }
 }
