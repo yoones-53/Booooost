@@ -2,6 +2,8 @@
 
 **Booooost** is a 2D physics-based rocket action game built with **Unity 6**.
 
+[![Play on Unity](https://img.shields.io/badge/Play-WebGL-blue?style=for-the-badge&logo=unity)](https://play.unity.com/en/games/7beb81b3-89a3-4805-8365-8974b714b7d7/booooost-web)
+
 ![Gameplay](Screenshots/GamePlay.gif)
 
 ## ✨ Highlights
