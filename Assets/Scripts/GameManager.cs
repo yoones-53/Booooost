@@ -68,10 +68,13 @@ public class GameManager : MonoBehaviour
 
 
     // 초깃값들
+    [HideInInspector]
+    public bool isPaused = false;
+
     float nextSpawnX = 10f;         // 다음 스폰 초깃값
     float nextLevelX = 100f;        // 다음 난이도증가 초깃값
     bool isGameOver = false;
-    bool isPaused = false;
+    
     
     void Start()
     {
@@ -133,6 +136,7 @@ public class GameManager : MonoBehaviour
             
             GameObject alien = PoolManager.Instance.GetAlien(Random.Range(0, 6));
             alien.transform.position = spawnPosition;
+            alien.SetActive(true);
         }   
         nextSpawnX += unitsPerSpawn;
     }

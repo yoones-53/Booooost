@@ -11,9 +11,9 @@ public class VerticalEnemy : MonoBehaviour
     public float moveDistance = 2f;   // 시작점 기준 상하 이동 거리
     public float moveSpeed = 2f;      // 이동 속도
 
-    void Start()
+    void OnEnable()
     {
-        startPos = transform.position; // 현재 위치를 시작 위치로 저장
+        startPos = transform.position;
     }
 
     void Update()

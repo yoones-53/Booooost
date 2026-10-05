@@ -45,6 +45,7 @@ public class Rocket : MonoBehaviour
     // 로켓 추진
     void RocketThrust()
     {
+        if (GameManager.Instance != null && GameManager.Instance.isPaused) return;
         // 좌클릭, Space, W, 윗방향키
         bool isThrusting = Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.UpArrow) ||
                            Input.GetKey(KeyCode.W)     || Input.GetMouseButton(0);

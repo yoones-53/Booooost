@@ -85,7 +85,8 @@ public class ExplodeEnemy : MonoBehaviour
         GameObject explosionObj = PoolManager.Instance.GetExplosion();
 
         explosionObj.transform.position = explosionPoint.position;
-
+        explosionObj.SetActive(true);
+        
         gameObject.SetActive(false);
     }
 }

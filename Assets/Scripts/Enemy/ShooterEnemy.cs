@@ -78,5 +78,7 @@ public class ShooterEnemy : MonoBehaviour
 
         Vector2 direction = (player.position - firePoint.position).normalized;
         bullet.SetDirection(direction);
+
+        bulletObj.SetActive(true);
     }
 }

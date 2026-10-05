@@ -10,7 +10,7 @@ public class CircleEnemy : MonoBehaviour
 
     private Vector2 centerPos; // 기준점
 
-    void Start()
+    void OnEnable()
     {
         centerPos = transform.position;
     }
